@@ -9,6 +9,10 @@ using namespace std;
 // named constants
 const int MAX_CHAR = 101;
 const int MUSIC_LIBRARY_CAP = 100;
+const int TITLE = 30;
+const int ARTIST = 30;
+const int ALBUM = 30;
+const int DURATION = 30;
 
 // define a new data type 
 struct SongEntry
@@ -24,8 +28,11 @@ void displayMenu();
 char readInCommand();
 void processCommand(char command, SongEntry list[], int& listSize);
 void readInEntry(SongEntry& anEntry);
+void readInName(char artist[], char album[]);
 
 // DATABASE RELATED FUNCTIONS
+void displayAll(const SongEntry list[], int listSize);
+void addEntry(const SongEntry& anEntry, SongEntry list[], int& listSize);
 
 // use external file
 
@@ -76,7 +83,8 @@ void displayMenu()
 	cout << "Choose from the following options: " << endl;
 	cout << "\t1. Add an entry" << endl;
 	cout << "\t2. List all entries" << endl;
-	cout << "\t3. Search a Song by name" << endl;
+	cout << "\t3. Search a Songs by Artist's name" << endl;
+	cout << "\t4. Search Songs by Album name" << endl;
 	cout << "\tq. Exit this program" << endl << endl;
 }
 
@@ -105,7 +113,10 @@ void processCommand(char command, SongEntry list[], int& listSize)
 			//displayAll(list listSize);
 			break;
 		case '3': 
-			//readInName(name);
+			//readInName(artist);
+			break;
+		case '4':
+			//readInName(album);
 			break;
 		default: 
 			cout << endl << "Wrong Input!" << endl;
@@ -115,7 +126,7 @@ void processCommand(char command, SongEntry list[], int& listSize)
 }
 
 //this function reads in a song entry
-void readInEntry(SongEntry&, anEntry)
+void readInEntry(SongEntry& anEntry)
 {
 	char title[MAX_CHAR];
 	char artist[MAX_CHAR];
@@ -135,4 +146,31 @@ void readInEntry(SongEntry&, anEntry)
 	strcpy(anEntry.album, album);
 }
 
-void readInTitle
+void readInName(char artist[], char album[])
+{
+	readString("Plese enter the Name of the Artist: ", artist, MAX_CHAR);
+	readString("Please enter the Name of the Album: ", album, MAX_CHAR);
+}
+
+//this function display all songs in file
+void displayAll(const SongEntry list[], int listSize)
+{
+	int index;
+	cout << setw(TITLE) << "Title" << setw(ARTIST) << "Artist" << setw(DURATION) << "Duration" << setw(ALBUM) << "Album" << endl;
+	for(index = 0; index < listSize; index++)
+	{
+		cout << setw(TITLE) << list[index].title << setw(ARTIST) << list[index].artist << setw(DURATION) << list[index].duration << setw(ALBUM) << list[index].album << endl;
+	}
+}
+
+// this function add entry to the end of the file
+void addEntry(const SongEntry& anEntry, SongEntry list[], int& listSize)
+{
+	strcpy(list[listSize].title, anEntry.title);
+	strcpy(list[listSize].artist, anEntry.artist);
+	strcpy(list[listSize].duration, anEntry.duration);
+	strcpy(list[listSize].album, anEntry.album);
+	listSize++;
+}
+
+
