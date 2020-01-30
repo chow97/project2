@@ -35,6 +35,8 @@ void displayAll(const SongEntry list[], int listSize);
 void addEntry(const SongEntry& anEntry, SongEntry list[], int& listSize);
 
 // use external file
+void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize);
+void saveMusicLibrary(const char fileName[], const SongEntry list[], int listSize);
 
 // Standard input tools
 void readString(const char prompt[], char inputStr[], int maxChar);
@@ -107,10 +109,10 @@ void processCommand(char command, SongEntry list[], int& listSize)
 	{
 		case '1': 
 			readInEntry(entry);
-			//addEntry(entry, list, listSize);
+			addEntry(entry, list, listSize);
 			break;
 		case '2': 
-			//displayAll(list listSize);
+			displayAll(list, listSize);
 			break;
 		case '3': 
 			//readInName(artist);
@@ -173,4 +175,37 @@ void addEntry(const SongEntry& anEntry, SongEntry list[], int& listSize)
 	listSize++;
 }
 
+// this function searches entries
+/*
+bool searchEntry(const char artist[], const char album[], SongEntry& match, const SongEntry list[], int lisrSize)
+{
+	int index;
+	for(index = 0; index < listSize; index++)
+	{
+		if(strcmp(artist, list[index].artist) == 0)
+		{
+			strcpy(match);
+		}
+	}
+}
+*/
 
+//this function load everthing in data file
+void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
+{
+	ifstream in;
+	char title[MAX_CHAR];
+	char artist[MAX_CHAR];
+	char duration[MAX_CHAR];
+	char album[MAX_CHAR];
+	SongEntry anEntry;
+
+	in.open(fileName);
+	if(!in)
+	{
+		in.clear();
+		cerr << endl << "Fail to open " << fileName << " for input!" << endl << endl;
+		exit(1);
+	}
+	in.get(
+}
