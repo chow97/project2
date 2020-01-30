@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 #include <iomanip>
+#include <cctype>
+#include <fstream>
 
 using namespace std;
 
@@ -21,8 +23,11 @@ struct SongEntry
 void displayMenu();
 char readInCommand();
 void processCommand(char command, SongEntry list[], int& listSize);
+void readInEntry(SongEntry& anEntry);
 
 // DATABASE RELATED FUNCTIONS
+
+// use external file
 
 // Standard input tools
 void readString(const char prompt[], char inputStr[], int maxChar);
@@ -93,7 +98,7 @@ void processCommand(char command, SongEntry list[], int& listSize)
 	switch(command)
 	{
 		case '1': 
-			//readInEntry(entry);
+			readInEntry(entry);
 			//addEntry(entry, list, listSize);
 			break;
 		case '2': 
@@ -104,8 +109,30 @@ void processCommand(char command, SongEntry list[], int& listSize)
 			break;
 		default: 
 			cout << endl << "Wrong Input!" << endl;
+
 			break;
 	}
 }
 
+//this function reads in a song entry
+void readInEntry(SongEntry&, anEntry)
+{
+	char title[MAX_CHAR];
+	char artist[MAX_CHAR];
+	char duration[MAX_CHAR];
+	char album[MAX_CHAR];
 
+	//read input title, artist, duration, album
+	readString("Please enter the Title of the song: ", title, MAX_CHAR);
+	readString("Please enter the Artist's name: ", artist, MAX_CHAR);
+	readString("Please enter the Duration of the song: ", duration, MAX_CHAR);
+	readString("Please enter the Album of the song: ", album, MAX_CHAR);
+
+	//populate the pased in object
+	strcpy(anEntry.title, title);
+	strcpy(anEntry.artist, artist);
+	strcpy(anEntry.duration, duration);
+	strcpy(anEntry.album, album);
+}
+
+void readInTitle
