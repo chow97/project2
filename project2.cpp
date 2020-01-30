@@ -2,6 +2,8 @@
 #include <cstring>
 #include <iomanip>
 
+using namespace std;
+
 // named constants
 const int MAX_CHAR = 101;
 
