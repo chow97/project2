@@ -32,9 +32,9 @@ int main()
 }
 
 // this function reads a c-string from standard input
-void readString(const char prompt[], char inputStr[], intaxChar)
+void readString(const char prompt[], char inputStr[], int maxChar)
 {
-	cout << endl << promt;
+	cout << endl << prompt;
 
 	//read until it reach maxChar limit or encounters a '\n'
 	cin.get(inputStr, maxChar, '\n');
@@ -42,7 +42,7 @@ void readString(const char prompt[], char inputStr[], intaxChar)
 	{
 		cin.clear();
 		cin.ignore(100, '\n');
-		cout << endl << promt;
+		cout << endl << prompt;
 		cin.get(inputStr, maxChar, '\n')
 	}
 	//throw away the '\n'
