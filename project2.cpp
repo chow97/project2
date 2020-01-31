@@ -9,10 +9,10 @@ using namespace std;
 // named constants
 const int MAX_CHAR = 101;
 const int MUSIC_LIBRARY_CAP = 100;
-const int TITLE = 30;
-const int ARTIST = 30;
-const int ALBUM = 30;
-const int DURATION = 30;
+const int TITLE = 20;
+const int ARTIST = 20;
+const int ALBUM = 20;
+const int DURATION = 20;
 
 // define a new data type 
 struct SongEntry
@@ -217,21 +217,19 @@ void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
 	while(!in.eof())
 	{
 		in.get();
-		in.get(artist, MAX_CHAR, '\n');
-		in.ignore(100, '\n');
-/*
-		in.get();
-		in.get(duration, MAX_CHAR, '\n');
-		in.ignore(100, '\n');
+		in.get(artist, MAX_CHAR, ';');
 
 		in.get();
+		in.get(duration, MAX_CHAR, ';');
+
+		in.get();	
 		in.get(album, MAX_CHAR, '\n');
 		in.ignore(100, '\n');
-*/
+
 		strcpy(anEntry.artist, artist);
 		strcpy(anEntry.title, title);
-//		strcpy(anEntry.duration, duration);
-//		strcpy(anEntry.album, album);
+		strcpy(anEntry.duration, duration);
+		strcpy(anEntry.album, album);
 
 		addEntry(anEntry, list, listSize);
 
