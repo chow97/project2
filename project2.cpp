@@ -1,3 +1,6 @@
+// Name : Chow
+// I couldn't get everything in the criteria but I tried my best
+
 #include <iostream>
 #include <cstring>
 #include <iomanip>
@@ -28,11 +31,13 @@ void displayMenu();
 char readInCommand();
 void processCommand(char command, SongEntry list[], int& listSize);
 void readInEntry(SongEntry& anEntry);
-void readInName(char artist[], char album[]);
+void readInArtist(char artist[]);
+void readInAlbum(char album[]);
 
 // DATABASE RELATED FUNCTIONS
 void displayAll(const SongEntry list[], int listSize);
 void addEntry(const SongEntry& anEntry, SongEntry list[], int& listSize);
+bool searchEntry(const char artist[], SongEntry& match, const SongEntry list[], int listSize);
 
 // use external file
 void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize);
@@ -59,6 +64,7 @@ int main()
 		command = readInCommand();
 	}
 	cout << endl <<  "Thank you" << endl << endl;
+	saveMusicLibrary(fileName, list, listSize);
 
 	return 0;
 }
@@ -97,7 +103,7 @@ char readInCommand()
 {
 	char cmd;
 
-	cout << endl << "Please enter command(1, 2, 3 or q): ";
+	cout << endl << "Please enter command(1, 2, 3, 4 or q): ";
 	cin >> cmd;
 	cin.ignore(100, '\n');
 	return tolower(cmd);
@@ -107,6 +113,8 @@ void processCommand(char command, SongEntry list[], int& listSize)
 {
 	SongEntry entry;
 	char title[MAX_CHAR];
+	char artist[MAX_CHAR];
+	char album[MAX_CHAR];
 
 	switch(command)
 	{
@@ -115,15 +123,20 @@ void processCommand(char command, SongEntry list[], int& listSize)
 			addEntry(entry, list, listSize);
 			break;
 
-		case '2': displayAll(list, listSize);
+		case '2': 
+			displayAll(list, listSize);
 			break;
 
 		case '3': 
-			//readInName(artist);
+			readInArtist(artist);
+			if(searchEntry(artist, entry, list, listSize))
+				cout << endl << "The song of " << artist << ": " << entry.title << endl;
+			else
+				cout << endl << "Invalid" << endl;
 			break;
 
 		case '4':
-			//readInName(album);
+			readInAlbum(album);
 			break;
 
 		default: 
@@ -153,9 +166,13 @@ void readInEntry(SongEntry& anEntry)
 	strcpy(anEntry.album, album);
 }
 
-void readInName(char artist[], char album[])
+void readInArtist(char artist[])
 {
 	readString("Plese enter the Name of the Artist: ", artist, MAX_CHAR);
+}
+
+void readInAlbum(char album[])
+{
 	readString("Please enter the Name of the Album: ", album, MAX_CHAR);
 }
 
@@ -181,22 +198,25 @@ void addEntry(const SongEntry& anEntry, SongEntry list[], int& listSize)
 }
 
 // this function searches entries
-/*
-bool searchEntry(const char artist[], const char album[], SongEntry& match, const SongEntry list[], int lisrSize)
+bool searchEntry(const char artist[], SongEntry& match, const SongEntry list[], int listSize)
 {
 	int index;
 	for(index = 0; index < listSize; index++)
 	{
 		if(strcmp(artist, list[index].artist) == 0)
 		{
-			strcpy(match);
+			strcpy(match.title, list[index].title);
+			strcpy(match.artist, list[index].artist);
+			break;
 		}
 	}
+	if(index == listSize)
+		return false;
+	else
+		return true;
 }
-*/
 
 //this function load everthing in data file
-
 void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
 {
 	ifstream in;
@@ -239,4 +259,23 @@ void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
 }
 
 
+void saveMusicLibrary(const char fileName[], const SongEntry list[], int listSize)
+{
+	ofstream out;
+	int index;
+
+	out.open(fileName);
+	if(!out)
+	{
+		out.clear();
+		cerr << endl << "Fail to open " << fileName << " for output!" << endl << endl;
+		exit(1);
+	}
+	for (index = 0; index < listSize; index++)
+	{
+		out << list[index].title << ';' << list[index].artist << ';' << list[index].duration << ';' << list[index].album << endl;
+	}
+
+	out.close();
+}
 
