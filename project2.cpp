@@ -85,7 +85,7 @@ void displayMenu()
 	cout << "Choose from the following options: " << endl;
 	cout << "\t1. Add an entry" << endl;
 	cout << "\t2. List all entries" << endl;
-	cout << "\t3. Search a Songs by Artist's name" << endl;
+	cout << "\t3. Search Songs by Artist name" << endl;
 	cout << "\t4. Search Songs by Album name" << endl;
 	cout << "\tq. Exit this program" << endl << endl;
 }
@@ -111,18 +111,21 @@ void processCommand(char command, SongEntry list[], int& listSize)
 			readInEntry(entry);
 			addEntry(entry, list, listSize);
 			break;
+
 		case '2': 
 			displayAll(list, listSize);
 			break;
+
 		case '3': 
 			//readInName(artist);
 			break;
+
 		case '4':
 			//readInName(album);
 			break;
+
 		default: 
 			cout << endl << "Wrong Input!" << endl;
-
 			break;
 	}
 }
@@ -207,5 +210,9 @@ void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
 		cerr << endl << "Fail to open " << fileName << " for input!" << endl << endl;
 		exit(1);
 	}
-	in.get(
+	in.get(title, MAX_CHAR, ';');
+	in.get(artist, MAX_CHAR, ';');
+	in.get(duration, MAX_CHAR, ';');
+	in.get(album, MAX_CHAR, ';');
+
 }
