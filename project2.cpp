@@ -46,7 +46,10 @@ int main()
 	char command;
 	SongEntry list[MUSIC_LIBRARY_CAP];
 	int listSize = 0;
-	
+	char fileName[] = "songs.txt";
+
+	loadMusicLibrary(fileName, list, listSize);
+
 	displayMenu();
 	command = readInCommand();
 	while (command != 'q')
@@ -112,8 +115,7 @@ void processCommand(char command, SongEntry list[], int& listSize)
 			addEntry(entry, list, listSize);
 			break;
 
-		case '2': 
-			displayAll(list, listSize);
+		case '2': displayAll(list, listSize);
 			break;
 
 		case '3': 
@@ -194,6 +196,7 @@ bool searchEntry(const char artist[], const char album[], SongEntry& match, cons
 */
 
 //this function load everthing in data file
+
 void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
 {
 	ifstream in;
@@ -211,8 +214,31 @@ void loadMusicLibrary(const char fileName[], SongEntry list[], int& listSize)
 		exit(1);
 	}
 	in.get(title, MAX_CHAR, ';');
-	in.get(artist, MAX_CHAR, ';');
-	in.get(duration, MAX_CHAR, ';');
-	in.get(album, MAX_CHAR, ';');
+	while(!in.eof())
+	{
+		in.get();
+		in.get(artist, MAX_CHAR, '\n');
+		in.ignore(100, '\n');
+/*
+		in.get();
+		in.get(duration, MAX_CHAR, '\n');
+		in.ignore(100, '\n');
 
+		in.get();
+		in.get(album, MAX_CHAR, '\n');
+		in.ignore(100, '\n');
+*/
+		strcpy(anEntry.artist, artist);
+		strcpy(anEntry.title, title);
+//		strcpy(anEntry.duration, duration);
+//		strcpy(anEntry.album, album);
+
+		addEntry(anEntry, list, listSize);
+
+		in.get(title, MAX_CHAR, ';');
+	}
+	in.close();
 }
+
+
+
