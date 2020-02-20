@@ -2,3 +2,4 @@ Rocket Man;Elton John;339;Blah Blah
 Comfortably Numb;Pink Floyd;450;Blah
 Freebird;Lynyrd Skynrd;400;Sweet Home
 Africa;Toto;300;Toto 2
+LOVE;Nat King Cole;3:00;LOVE
