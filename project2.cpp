@@ -1,6 +1,6 @@
 // Name : Chow
 // I couldn't get everything in the criteria but I tried my best
-
+//Raymond Aguilera
 #include <iostream>
 #include <cstring>
 #include <iomanip>
